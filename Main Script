@@ -5,11 +5,22 @@ def encrypt_decrypt_process():
 
     # If statement that checks if users are encrypting or decrypting texts
     if choice == "decrypt":
-        # Asks the user to input text and stores the input as a variable
-        text = input("Please enter your text: ")
-
-        # Asks the user what secret number they would like to use to encrypt their message and stores it as a variable
-        s = int(input("Please input your secret number: "))
+        # Input validation loop for text containing only letters
+        while True:
+            text = input("Please enter your text: ")
+            if text.isalpha():
+                break
+            else:
+                print("Invalid input. Please enter text containing only letters.")
+        
+        # Number input validation loop
+        while True:
+            try:
+                # Asks the user what secret number they would like to use to encrypt their message and stores it as a variable
+                s = int(input("Please input your secret number: "))
+                break  # Exit the loop if the input is a valid integer
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
 
         # Decrypts the text that the user inputs
         def decrypt(text, s):
@@ -32,12 +43,23 @@ def encrypt_decrypt_process():
         print("Output Text: " + decrypt(text, s))
 
     elif choice == "encrypt":
-        # Asks the user to input text and stores it as a variable
-        text = input("Please enter your text: ")
-
-        # Asks the user for the secret number used to encrypt the message and stores it as a variable
-        s = int(input("Please enter the secret number: "))
-
+        # Input validation loop for text containing only letters
+        while True:
+            text = input("Please enter your text: ")
+            if text.isalpha():
+                break
+            else:
+                print("Invalid input. Please enter text containing only letters.")
+        
+        # Number input validation loop
+        while True:
+            try:
+                # Asks the user for the secret number used to encrypt the message and stores it as a variable
+                s = int(input("Please enter the secret number: "))
+                break  # Exit the loop if the input is a valid integer
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+        
         # Encrypts the text that the user inputs
         def encrypt(text, s):
             result = ""
@@ -71,5 +93,5 @@ while True:
 
     # If the user doesn't want to restart, break the loop and end the program
     if restart.lower() != "yes":
-        print("Thank you for using my caeser cipher program. Goodbye!")
+        print("Thank you for using this program. Goodbye!")
         break
