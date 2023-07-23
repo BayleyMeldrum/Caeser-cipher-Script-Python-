@@ -5,13 +5,13 @@ def encrypt_decrypt_process():
 
     # If statement that checks if users are encrypting or decrypting texts
     if choice == "decrypt":
-        # Input validation loop for text containing only letters
+        # Input validation loop for text containing only letters and spaces
         while True:
             text = input("Please enter your text: ")
-            if text.isalpha():
+            if all((char.isalpha() or char.isspace() for char in text)):
                 break
             else:
-                print("Invalid input. Please enter text containing only letters.")
+                print("Invalid input. Please enter text containing only letters and spaces.")
         
         # Number input validation loop
         while True:
@@ -43,13 +43,13 @@ def encrypt_decrypt_process():
         print("Output Text: " + decrypt(text, s))
 
     elif choice == "encrypt":
-        # Input validation loop for text containing only letters
+        # Input validation loop for text containing only letters and spaces
         while True:
             text = input("Please enter your text: ")
-            if text.isalpha():
+            if all((char.isalpha() or char.isspace() for char in text)):
                 break
             else:
-                print("Invalid input. Please enter text containing only letters.")
+                print("Invalid input. Please enter text containing only letters and spaces.")
         
         # Number input validation loop
         while True:
