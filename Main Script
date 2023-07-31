@@ -1,7 +1,9 @@
+import os
+
 # Function to handle the entire encryption/decryption process
 def encrypt_decrypt_process():
     # Asks the user if they are encrypting or decrypting text
-    choice = input("If you are encrypting text, please enter 'encrypt'. If you are decrypting text, please enter 'decrypt': ")
+    choice = input("If you are encrypting text, please enter 'encrypt'. If you are decrypting text, please enter 'decrypt'")
 
     # If statement that checks if users are encrypting or decrypting texts
     if choice == "decrypt":
@@ -9,7 +11,10 @@ def encrypt_decrypt_process():
         while True:
             text = input("Please enter your text: ")
             if all((char.isalpha() or char.isspace() for char in text)):
-                break
+                if text.strip():  # Check if the input text is not blank after stripping leading/trailing spaces
+                    break
+                else:
+                    print("Invalid input. Please enter non-blank text containing only letters and spaces.")
             else:
                 print("Invalid input. Please enter text containing only letters and spaces.")
         
@@ -18,7 +23,10 @@ def encrypt_decrypt_process():
             try:
                 # Asks the user what secret number they would like to use to encrypt their message and stores it as a variable
                 s = int(input("Please input your secret number: "))
-                break  # Exit the loop if the input is a valid integer
+                if s < 1:  # Check if the secret number is less than one
+                    print("Invalid input. Please enter a non-negative number that is larger than zero.")
+                else:
+                    break  # Exit the loop if the input is a valid non-zero integer
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
 
@@ -28,8 +36,11 @@ def encrypt_decrypt_process():
 
             # Traverse text
             for char in text:
+                # Skip shifting spaces
+                if char.isspace():
+                    result += char
                 # Decrypt uppercase characters
-                if char.isupper():
+                elif char.isupper():
                     result += chr((ord(char) - s - 65) % 26 + 65)
                 # Decrypt lowercase characters
                 else:
@@ -39,15 +50,22 @@ def encrypt_decrypt_process():
 
         # Outputs the text that the user put in, along with a decrypted version and the secret number
         print("Input Text: " + text)
-        print("Shift: " + str(s))
-        print("Output Text: " + decrypt(text, s))
+        print("Secret Number: " + str(s))
+        decrypted_text = decrypt(text, s)
+        print("Output Text: " + decrypted_text)
+
+        # Save the decrypted text to a .txt file in the Decrypt folder
+        save_to_file(decrypted_text, "Decrypt", "decrypted.txt")
 
     elif choice == "encrypt":
         # Input validation loop for text containing only letters and spaces
         while True:
             text = input("Please enter your text: ")
             if all((char.isalpha() or char.isspace() for char in text)):
-                break
+                if text.strip():  # Check if the input text is not blank after stripping leading/trailing spaces
+                    break
+                else:
+                    print("Invalid input. Please enter non-blank text containing only letters and spaces.")
             else:
                 print("Invalid input. Please enter text containing only letters and spaces.")
         
@@ -56,7 +74,10 @@ def encrypt_decrypt_process():
             try:
                 # Asks the user for the secret number used to encrypt the message and stores it as a variable
                 s = int(input("Please enter the secret number: "))
-                break  # Exit the loop if the input is a valid integer
+                if s < 1:  # Check if the secret number is less than one
+                    print("Invalid input. Please enter a non-negative number that is larger than zero.")
+                else:
+                    break  # Exit the loop if the input is a valid non-zero integer
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
         
@@ -66,8 +87,11 @@ def encrypt_decrypt_process():
 
             # Traverse text
             for char in text:
+                # Skip shifting spaces
+                if char.isspace():
+                    result += char
                 # Encrypt uppercase characters
-                if char.isupper():
+                elif char.isupper():
                     result += chr((ord(char) + s - 65) % 26 + 65)
                 # Encrypt lowercase characters
                 else:
@@ -77,21 +101,49 @@ def encrypt_decrypt_process():
 
         # Outputs the text that the user entered, along with the encrypted version and the secret number
         print("Input Text: " + text)
-        print("Shift: " + str(s))
-        print("Output Text: " + encrypt(text, s))
+        print("Secret Number: " + str(s))
+        encrypted_text = encrypt(text, s)
+        print("Output Text: " + encrypted_text)
+
+        # Save the encrypted text to a .txt file in the Encrypt folder
+        save_to_file(encrypted_text, "Encrypt", "encrypted.txt")
 
     # Outputs text that tells the user to restart the program if they spelled 'encrypt' or 'decrypt' wrong
     else:
         print("Invalid choice. Please enter either 'encrypt' or 'decrypt' correctly.")
 
+# Function to save text to a .txt file in the Downloads folder
+def save_to_file(text, folder, filename):
+    while True:
+        save_file = input(f"Do you want to save this {folder.lower()} text to a .txt file? (yes/no): ").lower()
+        if save_file == "yes":
+            filepath = os.path.join("Cipher Output", folder)
+            if not os.path.exists(filepath):
+                os.makedirs(filepath)
+            filepath = os.path.join(filepath, filename)
+            with open(filepath, "a") as file:  # Use "a" mode for appending instead of "w" mode for writing
+                file.write(text + "\n")  # Append the text and add a newline character at the end
+            print(f"{folder} text saved to {filename}")
+            break
+        elif save_file == "no":
+            print(f"{folder} text not saved.")
+            break
+        else:
+            print("Invalid input. Please enter 'yes' or 'no' only.")
+
 # Main loop to restart the script if the user wants to
 while True:
     encrypt_decrypt_process()
 
-    # Ask if the user wants to restart
-    restart = input("Do you want to encrypt/decrypt again? (yes/no): ")
+    # Ask if the user wants to restart, and prints a message if the answer is 'no'
+    while True:
+        restart = input("Do you want to encrypt/decrypt again? (yes/no): ").lower()
+        if restart == "yes" or restart == "no":
+            break
+        else:
+            print("Invalid input. Please enter 'yes' or 'no' only.")
 
     # If the user doesn't want to restart, break the loop and end the program
-    if restart.lower() != "yes":
+    if restart == "no":
         print("Thank you for using this program. Goodbye!")
         break
