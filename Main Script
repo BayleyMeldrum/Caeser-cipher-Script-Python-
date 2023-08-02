@@ -1,3 +1,4 @@
+#Function to taske user inputs
 import os
 
 # Function to handle the entire encryption/decryption process
@@ -115,7 +116,7 @@ def encrypt_decrypt_process():
 # Function to save text to a .txt file in the Downloads folder
 def save_to_file(text, folder, filename):
     while True:
-        save_file = input(f"Do you want to save this {folder.lower()} text to a .txt file? (yes/no): ").lower()
+        save_file = input("Do you want to save this message to a .txt file?:").lower()
         if save_file == "yes":
             filepath = os.path.join("Cipher Output", folder)
             if not os.path.exists(filepath):
