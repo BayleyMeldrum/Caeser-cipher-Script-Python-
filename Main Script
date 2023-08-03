@@ -1,4 +1,4 @@
-#Function to taske user inputs
+#Function to take user inputs
 import os
 
 # Function to handle the entire encryption/decryption process
