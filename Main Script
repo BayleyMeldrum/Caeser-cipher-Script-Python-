@@ -1,5 +1,18 @@
 #Function to take user inputs
 import os
+import webbrowser
+
+#Prints the name of the program,along with the version number and thanks the user for giving this program a try.
+print("Welcome to Caeser Solver V9. Thank you forgiving my program a try!")
+
+#Asks the user if they would like to read the instructions
+instructions = input("Would you like to read the instructions? (yes/no): ")
+   #if the user inputs yes, the program will open 'instructions.txt' 
+if instructions.lower() == "yes":
+  webbrowser.open("instructions.txt")
+      #if the user inputs 'no', the program will move onto the next prompt
+elif instructions.lower() == "no":
+    pass  # Do nothing if user_input is "no"
 
 # Function to handle the entire encryption/decryption process
 def encrypt_decrypt_process():
@@ -23,8 +36,8 @@ def encrypt_decrypt_process():
         while True:
             try:
                 # Asks the user what secret number they would like to use to encrypt their message and stores it as a variable
-                s = int(input("Please input your secret number: "))
-                if s < 1:  # Check if the secret number is less than one
+                secretnumber = int(input("Please input your secret number: "))
+                if secretnumber < 1:  # Check if the secret number is less than one
                     print("Invalid input. Please enter a non-negative number that is larger than zero.")
                 else:
                     break  # Exit the loop if the input is a valid non-zero integer
@@ -32,7 +45,7 @@ def encrypt_decrypt_process():
                 print("Invalid input. Please enter a valid number.")
 
         # Decrypts the text that the user inputs
-        def decrypt(text, s):
+        def decrypt(text, secretnumber):
             result = ""
 
             # Traverse text
@@ -42,17 +55,17 @@ def encrypt_decrypt_process():
                     result += char
                 # Decrypt uppercase characters
                 elif char.isupper():
-                    result += chr((ord(char) - s - 65) % 26 + 65)
+                    result += chr((ord(char) - secretnumber - 65) % 26 + 65)
                 # Decrypt lowercase characters
                 else:
-                    result += chr((ord(char) - s - 97) % 26 + 97)
+                    result += chr((ord(char) - secretnumber - 97) % 26 + 97)
 
             return result
 
         # Outputs the text that the user put in, along with a decrypted version and the secret number
         print("Input Text: " + text)
-        print("Secret Number: " + str(s))
-        decrypted_text = decrypt(text, s)
+        print("Secret Number: " + str(secretnumber))
+        decrypted_text = decrypt(text, secretnumber)
         print("Output Text: " + decrypted_text)
 
         # Save the decrypted text to a .txt file in the Decrypt folder
@@ -74,8 +87,8 @@ def encrypt_decrypt_process():
         while True:
             try:
                 # Asks the user for the secret number used to encrypt the message and stores it as a variable
-                s = int(input("Please enter the secret number: "))
-                if s < 1:  # Check if the secret number is less than one
+                secretnumber = int(input("Please enter the secret number: "))
+                if secretnumber < 1:  # Check if the secret number is less than one
                     print("Invalid input. Please enter a non-negative number that is larger than zero.")
                 else:
                     break  # Exit the loop if the input is a valid non-zero integer
@@ -83,7 +96,7 @@ def encrypt_decrypt_process():
                 print("Invalid input. Please enter a valid number.")
         
         # Encrypts the text that the user inputs
-        def encrypt(text, s):
+        def encrypt(text, secretnumber):
             result = ""
 
             # Traverse text
@@ -93,17 +106,17 @@ def encrypt_decrypt_process():
                     result += char
                 # Encrypt uppercase characters
                 elif char.isupper():
-                    result += chr((ord(char) + s - 65) % 26 + 65)
+                    result += chr((ord(char) + secretnumber - 65) % 26 + 65)
                 # Encrypt lowercase characters
                 else:
-                    result += chr((ord(char) + s - 97) % 26 + 97)
+                    result += chr((ord(char) + secretnumber - 97) % 26 + 97)
 
             return result
 
         # Outputs the text that the user entered, along with the encrypted version and the secret number
         print("Input Text: " + text)
-        print("Secret Number: " + str(s))
-        encrypted_text = encrypt(text, s)
+        print("Secret Number: " + str(secretnumber))
+        encrypted_text = encrypt(text, secretnumber)
         print("Output Text: " + encrypted_text)
 
         # Save the encrypted text to a .txt file in the Encrypt folder
