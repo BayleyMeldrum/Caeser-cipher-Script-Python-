@@ -1,11 +1,10 @@
-#Function to take user inputs
 import os
 import webbrowser
 
-#Prints the name of the program,along with the version number and thanks the user for giving this program a try.
-print("Welcome to Caeser Solver V9. Thank you for giving my program a try!")
+# Prints the name of the program, along with the version number, and thanks the user for trying the program.
+print("Welcome to Caeser Solver V9. Thank you for trying my program!")
 
-#Asks the user if they want to read the instructions
+# Asks the user if they want to read the instructions
 def get_valid_instruction_choice():
     while True:
         choice = input("Would you like to read the instructions? (yes/no): ").lower()
@@ -16,7 +15,7 @@ def get_valid_instruction_choice():
 
 instructions = get_valid_instruction_choice()
 
-#if the user inputs 'yes', program opens
+# If the user inputs 'yes', the program opens the instructions file
 if instructions == "yes":
     webbrowser.open("instructions.txt")
 elif instructions == "no":
@@ -25,7 +24,7 @@ elif instructions == "no":
 # Function to handle the entire encryption/decryption process
 def encrypt_decrypt_process():
     # Asks the user if they are encrypting or decrypting text
-    choice = input("If you are encrypting text, please enter 'encrypt'. If you are decrypting text, please enter 'decrypt'")
+    choice = input("If you are encrypting text, please enter 'encrypt'. If you are decrypting text, please enter 'decrypt': ")
 
     # If statement that checks if users are encrypting or decrypting texts
     if choice == "decrypt":
@@ -43,12 +42,12 @@ def encrypt_decrypt_process():
         # Number input validation loop
         while True:
             try:
-                # Asks the user what secret number they would like to use to encrypt their message and stores it as a variable
-                secretnumber = int(input("Please input your secret number: "))
-                if secretnumber < 1:  # Check if the secret number is less than one
-                    print("Invalid input. Please enter a non-negative number that is larger than zero.")
+                # Asks the user what secret number they would like to use to decrypt their message and stores it as a variable
+                secretnumber = int(input("Please input your secret number (1-25): "))
+                if 1 <= secretnumber <= 25:  # Check if the secret number is within the range 1-25
+                    break
                 else:
-                    break  # Exit the loop if the input is a valid non-zero integer
+                    print("Invalid input. Please enter a number between 1 and 25.")
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
 
@@ -95,14 +94,14 @@ def encrypt_decrypt_process():
         while True:
             try:
                 # Asks the user for the secret number used to encrypt the message and stores it as a variable
-                secretnumber = int(input("Please enter the secret number: "))
-                if secretnumber < 1:  # Check if the secret number is less than one
-                    print("Invalid input. Please enter a non-negative number that is larger than zero.")
+                secretnumber = int(input("Please enter the secret number (1-25): "))
+                if 1 <= secretnumber <= 25:  # Check if the secret number is within the range 1-25
+                    break
                 else:
-                    break  # Exit the loop if the input is a valid non-zero integer
+                    print("Invalid input. Please enter a number between 1 and 25.")
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
-        
+
         # Encrypts the text that the user inputs
         def encrypt(message, secretnumber):
             result = ""
@@ -137,7 +136,7 @@ def encrypt_decrypt_process():
 # Function to save text to a .txt file in the Downloads folder
 def save_to_file(message, folder, filename):
     while True:
-        save_file = input("Do you want to save this message to a .txt file?:").lower()
+        save_file = input(f"Do you want to save this {folder} message to a .txt file? (yes/no): ").lower()
         if save_file == "yes":
             filepath = os.path.join("Cipher Output", folder)
             if not os.path.exists(filepath):
